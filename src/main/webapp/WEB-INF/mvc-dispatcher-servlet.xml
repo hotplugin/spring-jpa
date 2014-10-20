@@ -1,0 +1,37 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans     
+        http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+        http://www.springframework.org/schema/mvc 
+        http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+
+    <context:component-scan base-package="com.faisal.config" />
+<!-- Activates annotation-based bean configuration -->
+	<context:annotation-config />
+    <bean
+        class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix">
+            <value>/</value>
+        </property>
+        <property name="suffix">
+            <value>.jsp</value>
+        </property>
+    </bean>
+<!--    <bean name="/welcome" class="com.faisal.controller.HelloWorldController" />
+	
+    <bean name="/process*" class="com.faisal.controller.HelloWorldController" />
+    <bean id="customer" class="com.faisal.dto.Customer" >
+        <property name="name" value="faisal adil" />
+        <property name="mobile" value="9813199052" />
+    </bean>-->
+    
+    <mvc:resources mapping="/resources/**" location="/resources/mytheme/" />
+
+    <mvc:annotation-driven />
+	
+</beans>
