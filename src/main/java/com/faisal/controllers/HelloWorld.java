@@ -23,13 +23,19 @@ import jxl.Workbook;
 import com.faisal.entities.Ask;
 import com.faisal.entities.CsvMap;
 import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.supercsv.cellprocessor.constraint.NotNull;
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.io.CsvBeanReader;
+import org.supercsv.io.CsvBeanWriter;
 import org.supercsv.io.ICsvBeanReader;
+import org.supercsv.io.ICsvBeanWriter;
 import org.supercsv.prefs.CsvPreference;
 
 /**
@@ -138,9 +144,49 @@ public class HelloWorld {
     }
 
     @RequestMapping(value = "/queryfile", method = RequestMethod.POST)
-    public String queryfile(@RequestParam("from") String from,@RequestParam("to") String to) {
-        System.out.println("queryfile called..."+from+"  "+to);
-        return "hello";
+    public ModelAndView queryfile(@RequestParam("from") String from, @RequestParam("to") String to, @RequestParam("flocation") String flocation) throws IOException {
+        System.out.println("queryfile called..." + from + "  " + to);
+        List<Ask> found = studentDao.download(from, to);
+        String msg = "";
+        if (found != null) {
+//            for (Ask a : found) {
+//                System.out.println(a.getId());
+//            }
+
+            ICsvBeanWriter beanWriter = null;
+            try {
+                beanWriter = new CsvBeanWriter(new FileWriter(flocation),
+                        CsvPreference.STANDARD_PREFERENCE);
+
+                // the header elements are used to map the bean values to each column (names must match)
+                final String[] header = new String[]{"timeanddatestring", "ask"
+                };
+                final CellProcessor[] processors = new CellProcessor[]{
+                    new NotNull(), // time
+                    new NotNull() // time
+                };
+
+                // write the header
+                beanWriter.writeHeader(header);
+
+                // write the beans
+                for (final Ask customer : found) {
+                    beanWriter.write(customer, header, processors);
+                }
+                msg="Success!";
+            } catch (IOException ex) {
+                msg = ex.getMessage();
+            } finally {
+                if (beanWriter != null) {
+                    beanWriter.close();
+                }
+            }
+        }else{
+            msg="No Record Found";
+        }
+         ModelAndView model = new ModelAndView("hello");
+        model.addObject("msgd", msg);
+        return model;
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)

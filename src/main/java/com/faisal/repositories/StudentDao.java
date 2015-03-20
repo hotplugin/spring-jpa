@@ -22,4 +22,5 @@ public interface StudentDao {
      public List<Student>findAllStudent();
      
      public boolean addRow(Ask a);
+     public List<Ask> download(String from,String to);
 }

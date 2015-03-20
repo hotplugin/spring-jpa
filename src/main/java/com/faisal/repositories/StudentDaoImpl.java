@@ -10,6 +10,7 @@ import com.faisal.entities.Student;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,7 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Repository
 @Transactional
-public class StudentDaoImpl implements StudentDao{
+public class StudentDaoImpl implements StudentDao {
 
     private EntityManager em;
 
@@ -27,34 +28,48 @@ public class StudentDaoImpl implements StudentDao{
     public void setEntityManager(EntityManager em) {
         this.em = em;
     }
-    
+
     @Override
     public Student findStudent(String username) {
-	return (Student) em.createQuery("select u from Student u where u.firstName = :username")
-		.setParameter("username", username).getSingleResult();
+        return (Student) em.createQuery("select u from Student u where u.firstName = :username")
+                .setParameter("username", username).getSingleResult();
     }
-    
+
     @Override
-    public void addStudent(Student st){
+    public void addStudent(Student st) {
         em.persist(st);
-        
+
     }
-    
+
     @Override
-    public List<Student>findAllStudent(){
-    
+    public List<Student> findAllStudent() {
+
         return em.createNamedQuery("Student.findAll").getResultList();
     }
-    
-    public boolean  addRow(Ask a){
-        try{
-            
-             em.persist(a);
+
+    public boolean addRow(Ask a) {
+        try {
+
+            em.persist(a);
 //             System.out.println("OK");
-        }catch(Exception e){
-            System.out.println("addrow error: "+e.getMessage());
+        } catch (Exception e) {
+            System.out.println("addrow error: " + e.getMessage());
             return false;
         }
         return true;
+    }
+
+    public List<Ask> download(String from,String to) {
+        try {
+            Query q = em.createQuery("Select a from Ask a where a.timeanddatestring between ?1 and ?2");
+            q.setParameter(1, from);
+            q.setParameter(2,to);
+            List<Ask> results = q.getResultList();
+            return results;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+
     }
 }
