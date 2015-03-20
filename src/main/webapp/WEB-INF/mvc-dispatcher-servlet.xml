@@ -33,5 +33,13 @@
     <mvc:resources mapping="/resources/**" location="/resources/mytheme/" />
 
     <mvc:annotation-driven />
+    
+    <bean id="multipartResolver"
+        class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+ 
+         <!-- setting maximum upload size -->
+        <!--<beans:property name="maxUploadSize" value="100000" />-->
+ 
+    </bean>
 	
 </beans>

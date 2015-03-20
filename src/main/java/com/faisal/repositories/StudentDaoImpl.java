@@ -5,6 +5,7 @@
  */
 package com.faisal.repositories;
 
+import com.faisal.entities.Ask;
 import com.faisal.entities.Student;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -43,5 +44,17 @@ public class StudentDaoImpl implements StudentDao{
     public List<Student>findAllStudent(){
     
         return em.createNamedQuery("Student.findAll").getResultList();
+    }
+    
+    public boolean  addRow(Ask a){
+        try{
+            
+             em.persist(a);
+//             System.out.println("OK");
+        }catch(Exception e){
+            System.out.println("addrow error: "+e.getMessage());
+            return false;
+        }
+        return true;
     }
 }

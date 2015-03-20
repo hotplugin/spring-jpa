@@ -3,34 +3,21 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
-  
+
     <c:import url="header.jsp" charEncoding="UTF-8" />
     <body>
-         <h3>${name}</h3>
-        <h3>${msg}</h3>
-        <c:forEach var="listValue" items="${lists}">
-        <li>${listValue}</li>
-        </c:forEach>
-    <h1>2. Test CSS</h1>
-
-    <h2>2. Test JS</h2>
-    <div id="msg"></div>
-    <table>
-        <thead><th>First </th><th>Last </th></thead>
-    <c:forEach items="${list}" var="s">
-        
-        <tr>
-            <td>
-        <c:out value="${s.firstName}"/></td>
-        <td><c:out value="${s.lastName}"/></td>
-        </tr>
-    </c:forEach>
-        </table>
-    <form:form action="add" method="post" modelAttribute="student">
-        <form:input path="firstName"/>
-            <form:input path="lastName"/>
-        <input type="submit" value="go"/>
-        
-    </form:form>
-</body>
+        <form:form action="uploadfile" method="post" enctype="multipart/form-data">
+            File to upload: <input type="file" name="file"><br /> 
+            <input type="submit" value="Upload"/>
+        </form:form>
+            <h3> ${successmsg}</h3>
+            <h4> ${msg}</h4>
+            <br/>
+             <form:form action="queryfile" method="post">
+            From Time: <input type="text" name="from"><br /> 
+            To Time: <input type="text" name="to"><br /> 
+            <input type="submit" value="Download"/>
+        </form:form>
+            
+    </body>
 </html>

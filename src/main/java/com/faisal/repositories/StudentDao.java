@@ -5,6 +5,7 @@
  */
 package com.faisal.repositories;
 
+import com.faisal.entities.Ask;
 import com.faisal.entities.Student;
 import java.util.List;
 
@@ -19,4 +20,6 @@ public interface StudentDao {
      public void addStudent(Student st);
      
      public List<Student>findAllStudent();
+     
+     public boolean addRow(Ask a);
 }
