@@ -22,9 +22,9 @@
             <table>
                 <tr>
                     
-                    <td>From Time:</td> <td><input type="text" name="from" value="2015.01.04 22:00:03.845" size="35"></td>
+                    <td>From Time:</td> <td><input type="text" name="from" value="2015.01.04 22:00:03" size="35"></td>
                 </tr>
-                <tr><td>To Time: </td><td><input type="text" name="to" value="2015.01.04 22:00:05.350" size="35"></td></tr>
+                <tr><td>To Time: </td><td><input type="text" name="to" value="2015.01.04 22:00:05" size="35"></td></tr>
                 <tr><td>File Location and Name:</td><td> <input type="text" name="flocation" value="F:\\ask.csv" size="35"/></td></tr>
                 <tr><td></td><td><input type="submit" value="Download"/></td></tr>
             </table>
